@@ -1,0 +1,145 @@
+<resources>
+    <string name="app_name">Darts</string>
+
+    <!-- Navigation -->
+    <string name="nav_settings">Settings</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_play">Play</string>
+    <string name="nav_statistics">Statistics</string>
+
+    <!-- General -->
+    <string name="back">Back</string>
+    <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
+    <string name="save">Save</string>
+    <string name="create">Create</string>
+    <string name="history">History</string>
+    <string name="play">Play</string>
+    <string name="dropdown_mode">Mode</string>
+    <string name="games">Games</string>
+    <string name="sets">Sets</string>
+    <string name="legs">Legs</string>
+    <string name="player">Player</string>
+    <string name="game">Game</string>
+    <string name="set">Set</string>
+    <string name="leg">Leg</string>
+    <string name="game_mode">Game mode</string>
+    <string name="score">Score</string>
+    <string name="average">Average</string>
+    <string name="average_short">Avg</string>
+    <string name="average_short_append">Avg:</string>
+    <string name="button_continue">Continue</string>
+    <string name="delete">Delete</string>
+    <string name="duplicate">Duplicate</string>
+    <string name="type">Type</string>
+    <string name="value">Value</string>
+    <string name="name">Name</string>
+    <string name="steps">Steps</string>
+    <string name="proceed">Proceed</string>
+
+    <!-- HomeScreen -->
+    <string name="quick_settings">Quick settings</string>
+    <string name="manage_players">Manage players</string>
+    <string name="manage_game_modes">Manage game modes</string>
+    <string name="last_games">Last games</string>
+    <!-- PlayScreen -->
+    <string name="average_for_mode">Average(Mode)</string>
+    <string name="random_player_order">Random player order</string>
+    <!-- SettingsScreen -->
+    <string name="appearance">Appearance</string>
+    <string name="dark_theme">Dark Theme</string>
+    <string name="game_modes">Game-Modes</string>
+    <string name="players">Players</string>
+    <string name="checkout_suggestion">Checkout suggestions</string>
+    <!-- SettingsScreen -->
+    <string name="overall">Overall</string>
+    <string name="competitive">Competitive</string>
+    <string name="visual">Visual</string>
+    <string name="darts_total">Darts total</string>
+    <string name="darts_per_leg">Darts/Leg</string>
+    <string name="triple_count">Triple</string>
+    <string name="double_count">Double</string>
+    <string name="miss_bust">Miss/Bust</string>
+    <string name="highest_finish">Highest finish</string>
+    <string name="eightyplus">80+</string>
+    <string name="hundredplus">100+</string>
+    <string name="hundred_fourty_plus">140+</string>
+    <string name="hundred_eighty">180</string>
+    <string name="darts_to_score">Darts to score</string>
+    <string name="darts_to_score_info">Darts to first possible checkout. Only legs won count towards this metric</string>
+    <string name="scoring_average">Scoring Average</string>
+    <string name="scoring_average_info">Average before the first possible checkout is reached</string>
+    <string name="darts_to_finish">Darts to finish</string>
+    <string name="darts_to_finish_info">Counted from first possible checkout to the finish. Only won legs count towards this metric</string>
+    <string name="finish_average">Finish Average</string>
+    <string name="finish_average_info">Average for the Darts to finish metric</string>
+    <string name="total_played_won">Total (Played/Won)</string>
+    <string name="faceoff_played_won">Face-Offs (Played/Won)</string>
+    <string name="running_average">Running average</string>
+    <string name="running_total">Total</string>
+    <string name="running_score">To score</string>
+    <string name="running_finish">To finish</string>
+    <string name="daily_average">Daily average</string>
+    <!-- GameScreen -->
+    <string name="next_player">Next</string>
+    <string name="modifier_double">Double (D)</string>
+    <string name="modifier_triple">Triple (T)</string>
+    <string name="button_miss">Miss</string>
+    <string name="button_undo">Undo</string>
+    <string name="leg_finished_dialog">Leg finished!</string>
+    <string name="set_finished_dialog">Set finished!</string>
+    <!-- GameScreen -->
+    <string name="rematch">Rematch</string>
+    <!-- PostGameScreen -->
+    <string name="set_leg_info">S/L</string>
+    <!-- CheckoutSuggestionScreen -->
+    <string name="checkout_type">Checkout type</string>
+    <string name="score_append">Score:</string>
+    <string name="checkout_append">Checkout:</string>
+    <string name="one_number">1</string>
+    <string name="two_number">2</string>
+    <string name="three_number">3</string>
+    <string name="error_required_score">Required score:</string>
+    <string name="error_invalid_checkout">Invalid checkout:</string>
+    <string name="select_player">Select player</string>
+    <string name="player_append">Player:</string>
+    <!-- GameConfigurationScreen -->
+    <string name="game_configuration">Game configuration</string>
+    <string name="step_behaviour">Step behaviour</string>
+    <string name="random_step_order">Random step order</string>
+    <string name="repeat_on_failure">Repeat step on failure</string>
+    <string name="proceed_on_success">Proceed on success</string>
+    <string name="start_score">Start score</string>
+    <string name="score_type">Score type</string>
+    <string name="on_step_success">On step success</string>
+    <string name="on_step_failure">On step failure</string>
+    <string name="win_condition">Win condition</string>
+    <!-- GameModeDetailScreen -->
+    <string name="create_game_mode">Create game mode</string>
+    <string name="edit_game_mode">Edit game mode</string>
+    <string name="inspect_game_mode">Inspect game mode</string>
+    <string name="delete_game_mode">Are you sure you want to delete Game-Mode %1$s?</string>
+    <string name="delete_game_mode_game_hint">All associated games (%1$d) will be deleted as well.</string>
+    <string name="configure">Configure</string>
+    <string name="check_in">Check-In</string>
+    <string name="check_out">Check-Out</string>
+    <string name="Summary">Summary</string>
+    <string name="score_success">Score (success)</string>
+    <string name="score_failure">Score (failure)</string>
+    <string name="immutable">Immutable</string>
+    <string name="game_mode_immutable">There are already games for this mode, so only the name can be changed. If you still want to make changes, you can duplicate the mode.</string>
+    <string name="game_mode_duplicate_info">Duplicate game mode %1$s?</string>
+    <!-- GameModeScreen -->
+    <!-- GameModeStepScreen -->
+    <string name="field_append">Field:</string>
+    <string name="field_type_append">FieldType:</string>
+    <!-- PlayerDetailScreen -->
+    <string name="create_new_player">Create new player</string>
+    <string name="edit_player">Edit player</string>
+    <string name="delete_player">Delete player</string>
+    <string name="activity">Activity</string>
+    <!-- HistoryScreen -->
+    <string name="set_leg_info_append">S/L:</string>
+    <string name="player_count_info">Players:</string>
+    <string name="winner_info">Winner:</string>
+</resources>
