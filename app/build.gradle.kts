@@ -18,6 +18,7 @@ android {
         targetSdk = 35
         versionCode = properties("appVersionCode").get().toInt()
         versionName = properties("appVersion").get()
+        version = versionName ?: "unspecified"
 
         //build system only includes language resource in the APK for these specified languages
         //should be the same as res/xml/locales_config.xml

@@ -1,7 +1,7 @@
 name: Build
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
 
 jobs:
@@ -39,13 +39,15 @@ jobs:
         shell: bash
         run: |
           PROPERTIES="$(./gradlew properties --console=plain -q)"
-          VERSION="$(echo "$PROPERTIES" | grep "^version:" | cut -f2- -d ' ')"
+          VERSION="$(echo "$PROPERTIES" | grep "appVersion:" | cut -f2- -d ' ')"
 
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-      # Build and test
-      - name: Build plugin
-        run: ./gradlew build
+      - name: Test
+        run: ./gradlew clean testDebug
+
+      - name: Build release
+        run: ./gradlew bundleRelease
 
   # Call Workflow responsible for creating draft releases
   # Exclude release commits, as in this case, the existing draft will be released
@@ -62,7 +64,7 @@ jobs:
   # Call Workflow responsible for releasing the current draft release
   releaseDraft:
     name: Release Draft
-    needs: [build, verify]
+    needs: [build]
     if: github.event_name != 'pull_request' && startsWith(github.event.head_commit.message, 'Release v')
     uses: ./.github/workflows/release.yml
     permissions:

@@ -101,7 +101,7 @@ jobs:
 
       # Build
       - name: Build
-        run: ./gradlew build
+        run: ./gradlew bundleRelease
 
       # Create a pull request
       - name: Create Pull Request
