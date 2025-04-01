@@ -69,9 +69,8 @@ fun <T> CustomDropdown(
                 .menuAnchor(MenuAnchorType.PrimaryEditable),
         ) {
             val alpha = if (enabled) 1f else 0.6f
-            val text = if (enabled) itemText.invoke(initialItem) else "-"
             Text(
-                text = text,
+                text = itemText.invoke(initialItem),
                 fontSize = 18.sp,
                 maxLines = 1,
                 textAlign = TextAlign.Start,

@@ -117,7 +117,8 @@ fun GameModeDetailScreen(navController: NavController) {
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier
-                                    .size(20.dp)
+                                    .size(22.dp)
+                                    .padding(start = 4.dp)
                                     .clickable {
                                         showDialog = true
                                     })

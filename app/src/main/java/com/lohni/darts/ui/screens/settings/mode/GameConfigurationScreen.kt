@@ -143,9 +143,11 @@ fun GameConfigurationScreen(navController: NavController) {
                 0 -> {
                     BehaviourTab(gameModeViewModel)
                 }
+
                 1 -> {
                     ScoreTab(gameModeViewModel)
                 }
+
                 else -> {
                     StepTab(gameModeViewModel)
                 }
@@ -317,17 +319,21 @@ fun BehaviourTab(gameModeViewModel: GameModeViewModel) {
 @Composable
 fun ScoreTab(gameModeViewModel: GameModeViewModel) {
     val scrollState = rememberScrollState()
+    val editable by remember { gameModeViewModel.editable }
+
     Column(
         modifier = Modifier.verticalScroll(scrollState)
     ) {
         ScoreCalculation(
             stringResource(R.string.on_step_success),
             gameModeViewModel.successCalculation,
-            { gameModeViewModel.setSuccessCalculation(it) })
+            editable
+        ) { gameModeViewModel.setSuccessCalculation(it) }
         ScoreCalculation(
             stringResource(R.string.on_step_failure),
             gameModeViewModel.failureCalculation,
-            { gameModeViewModel.setFailureCalculation(it) })
+            editable
+        ) { gameModeViewModel.setFailureCalculation(it) }
     }
 }
 
@@ -350,7 +356,7 @@ fun StepTab(gameModeViewModel: GameModeViewModel) {
                     item = item,
                     onDelete = { gameModeViewModel.deleteGameModeStep(it) }
                 ) {
-                    StepItem(item, editable)
+                    StepItem(item, true)
                 }
             } else {
                 StepItem(item)
@@ -443,9 +449,11 @@ fun StepItem(gameModeStep: GameModeStep, editable: Boolean = false) {
 fun ScoreCalculation(
     title: String,
     calculation: MutableState<ScoreCalculation>,
+    enabled: Boolean = true,
     onCalcChange: (ScoreCalculation) -> Unit
 ) {
     val calcSchema by remember { calculation }
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.padding(top = 8.dp)
@@ -465,13 +473,11 @@ fun ScoreCalculation(
         var typeModifierExpanded by remember { mutableStateOf(false) }
         ExposedDropdownMenuBox(
             expanded = typeModifierExpanded,
-            onExpandedChange = { typeModifierExpanded = it },
+            onExpandedChange = { if (enabled) typeModifierExpanded = it },
             modifier = Modifier
                 .weight(0.2F)
-                .padding(top = 8.dp)
-                .clickable {
-                    typeModifierExpanded = true
-                }
+                .padding(top = 8.dp, end = 8.dp)
+                .clickable { if (enabled) typeModifierExpanded = true }
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -482,10 +488,12 @@ fun ScoreCalculation(
                     .background(MaterialTheme.colorScheme.surfaceContainerHigh)
                     .menuAnchor(MenuAnchorType.PrimaryEditable),
             ) {
+                val alpha = if (enabled) 1f else 0.6f
                 Text(
                     text = calcSchema.scByTypeModifier.label,
                     modifier = Modifier
                         .weight(1F)
+                        .alpha(alpha)
                         .padding(start = 4.dp),
                     maxLines = 1,
                     textAlign = TextAlign.Center
@@ -493,7 +501,9 @@ fun ScoreCalculation(
                 Icon(
                     imageVector = Icons.Rounded.ArrowDropDown,
                     contentDescription = null,
-                    modifier = Modifier.padding(end = 4.dp)
+                    modifier = Modifier
+                        .padding(end = 4.dp)
+                        .alpha(alpha)
                 )
             }
             ExposedDropdownMenu(
@@ -515,16 +525,14 @@ fun ScoreCalculation(
         var typeExpanded by remember { mutableStateOf(false) }
         ExposedDropdownMenuBox(
             expanded = typeExpanded,
-            onExpandedChange = { typeExpanded = it },
-            modifier = Modifier
-                .weight(0.4F)
-                .padding(start = 8.dp)
+            onExpandedChange = { if (enabled) typeExpanded = it },
+            modifier = Modifier.weight(0.4F)
         ) {
             OutlinedTextField(
                 value = calcSchema.scByType.label,
                 singleLine = true,
                 readOnly = true,
-                enabled = calcSchema.scByTypeModifier != ScoreModifier.NONE,
+                enabled = enabled && calcSchema.scByTypeModifier != ScoreModifier.NONE,
                 label = { Text(stringResource(R.string.type)) },
                 onValueChange = {},
                 modifier = Modifier
@@ -557,11 +565,11 @@ fun ScoreCalculation(
         var valueModifierExpanded by remember { mutableStateOf(false) }
         ExposedDropdownMenuBox(
             expanded = valueModifierExpanded,
-            onExpandedChange = { valueModifierExpanded = it },
+            onExpandedChange = { if (enabled) valueModifierExpanded = it },
             modifier = Modifier
                 .weight(0.2F)
                 .padding(start = 8.dp, top = 8.dp)
-                .clickable { valueModifierExpanded = true }
+                .clickable { if (enabled) valueModifierExpanded = true }
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -572,10 +580,12 @@ fun ScoreCalculation(
                     .background(MaterialTheme.colorScheme.surfaceContainerHigh)
                     .menuAnchor(MenuAnchorType.PrimaryEditable),
             ) {
+                val alpha = if (enabled) 1f else 0.6f
                 Text(
                     text = calcSchema.scByValueModifier.label,
                     modifier = Modifier
                         .weight(1F)
+                        .alpha(alpha)
                         .padding(start = 4.dp),
                     maxLines = 1,
                     textAlign = TextAlign.Center
@@ -583,7 +593,9 @@ fun ScoreCalculation(
                 Icon(
                     imageVector = Icons.Rounded.ArrowDropDown,
                     contentDescription = null,
-                    modifier = Modifier.padding(end = 4.dp)
+                    modifier = Modifier
+                        .padding(end = 4.dp)
+                        .alpha(alpha)
                 )
             }
             ExposedDropdownMenu(
@@ -606,7 +618,7 @@ fun ScoreCalculation(
             value = calcSchema.scByValue.toString(),
             singleLine = true,
             label = { Text(stringResource(R.string.value)) },
-            enabled = calcSchema.scByValueModifier != ScoreModifier.NONE,
+            enabled = enabled && calcSchema.scByValueModifier != ScoreModifier.NONE,
             onValueChange = {
                 val changedValue = if (it != "") it else "0"
                 onCalcChange.invoke(calcSchema.copy(scByValue = changedValue.toInt()))

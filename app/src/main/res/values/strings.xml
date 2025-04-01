@@ -127,7 +127,7 @@
     <string name="score_success">Score (success)</string>
     <string name="score_failure">Score (failure)</string>
     <string name="immutable">Immutable</string>
-    <string name="game_mode_immutable">There are already games for this mode, so only the name can be changed. If you still want to make changes, you can duplicate the mode.</string>
+    <string name="game_mode_immutable">To ensure data integrity, only the game mode\'s name can be changed. ou can create an editable copy by duplicating this mode.</string>
     <string name="game_mode_duplicate_info">Duplicate game mode %1$s?</string>
     <!-- GameModeScreen -->
     <!-- GameModeStepScreen -->
