@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -22,6 +23,7 @@ import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.material.icons.rounded.Clear
+import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -63,6 +65,7 @@ import com.lohni.darts.room.enums.ScoreModifier
 import com.lohni.darts.room.enums.ScoreType
 import com.lohni.darts.room.enums.StepWinCondition
 import com.lohni.darts.ui.composable.CustomDropdown
+import com.lohni.darts.ui.composable.InfoDialog
 import com.lohni.darts.ui.composable.OutlinedDropdown
 import com.lohni.darts.ui.composable.SwipteToDeleteContainer
 import com.lohni.darts.viewmodel.GameModeViewModel
@@ -253,65 +256,41 @@ fun BehaviourTab(gameModeViewModel: GameModeViewModel) {
                 modifier = Modifier.alpha(0.8F)
             )
         }
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
+        BehaviourToggleRow(
+            stringResource(R.string.random_step_order),
+            stringResource(R.string.random_step_order_info),
+            editable,
+            gameModeConfig.gmcRandomStepOrder
         ) {
-            Column(Modifier.weight(1.0F), verticalArrangement = Arrangement.Center) {
-                Text(stringResource(R.string.random_step_order), fontSize = 16.sp)
-            }
-
-            Column {
-                Switch(
-                    checked = gameModeConfig.gmcRandomStepOrder,
-                    enabled = editable,
-                    onCheckedChange = {
-                        gameModeViewModel.setGameModeConfig(
-                            gameModeConfig.copy(
-                                gmcRandomStepOrder = it
-                            )
-                        )
-                    })
-            }
+            gameModeViewModel.setGameModeConfig(
+                gameModeConfig.copy(
+                    gmcRandomStepOrder = it
+                )
+            )
         }
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
+        BehaviourToggleRow(
+            stringResource(R.string.repeat_on_failure),
+            stringResource(R.string.repeat_on_failure_info),
+            editable,
+            gameModeConfig.gmcRepeatOnFailure
         ) {
-            Column(Modifier.weight(1.0F), verticalArrangement = Arrangement.Center) {
-                Text(stringResource(R.string.repeat_on_failure), fontSize = 16.sp)
-            }
-
-            Column {
-                Switch(
-                    checked = gameModeConfig.gmcRepeatOnFailure,
-                    enabled = editable,
-                    onCheckedChange = {
-                        gameModeViewModel.setGameModeConfig(
-                            gameModeConfig.copy(
-                                gmcRepeatOnFailure = it
-                            )
-                        )
-                    })
-            }
+            gameModeViewModel.setGameModeConfig(
+                gameModeConfig.copy(
+                    gmcRepeatOnFailure = it
+                )
+            )
         }
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
+        BehaviourToggleRow(
+            stringResource(R.string.proceed_on_success),
+            stringResource(R.string.proceed_on_success_info),
+            editable,
+            gameModeConfig.gmcImmediateProceedOnSuccess
         ) {
-            Column(Modifier.weight(1.0F), verticalArrangement = Arrangement.Center) {
-                Text(stringResource(R.string.proceed_on_success), fontSize = 16.sp)
-            }
-
-            Column {
-                Switch(
-                    checked = gameModeConfig.gmcImmediateProceedOnSuccess,
-                    enabled = editable,
-                    onCheckedChange = {
-                        gameModeViewModel.setGameModeConfig(
-                            gameModeConfig.copy(
-                                gmcImmediateProceedOnSuccess = it
-                            )
-                        )
-                    })
-            }
+            gameModeViewModel.setGameModeConfig(
+                gameModeConfig.copy(
+                    gmcImmediateProceedOnSuccess = it
+                )
+            )
         }
     }
 }
@@ -649,6 +628,52 @@ fun ScoreCalculation(
                 .padding(top = 8.dp, start = 16.dp)
                 .alpha(0.8F)
         )
+    }
+}
+
+@Composable
+fun BehaviourToggleRow(
+    label: String,
+    infoText: String,
+    editable: Boolean = true,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column(verticalArrangement = Arrangement.Center) {
+            Text(label, maxLines = 1, fontSize = 16.sp)
+        }
+
+        var showDialog by remember { mutableStateOf(false) }
+        Icon(
+            modifier = Modifier
+                .padding(4.dp)
+                .size(20.dp)
+                .clickable {
+                    showDialog = true
+                },
+            imageVector = Icons.Rounded.Info,
+            contentDescription = null
+        )
+        Spacer(Modifier.weight(1f))
+        InfoDialog(
+            showDialog,
+            label,
+            stringResource(R.string.close),
+            onDissmiss = { showDialog = false }
+        ) {
+            Text(infoText, fontSize = 16.sp)
+        }
+        Column {
+            Switch(
+                checked = checked,
+                enabled = editable,
+                onCheckedChange = {
+                    onCheckedChange.invoke(it)
+                })
+        }
     }
 }
 

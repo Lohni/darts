@@ -107,8 +107,11 @@
     <string name="game_configuration">Game configuration</string>
     <string name="step_behaviour">Step behaviour</string>
     <string name="random_step_order">Random step order</string>
+    <string name="random_step_order_info">The defined steps will be executed in a random order</string>
     <string name="repeat_on_failure">Repeat step on failure</string>
+    <string name="repeat_on_failure_info">If the step\'s condition is not met during a turn, the step is repeated. When disabled, the game automatically advances to the next step after each turn.</string>
     <string name="proceed_on_success">Proceed on success</string>
+    <string name="proceed_on_success_info">The game will immediately advance to the next step, allowing multiple steps to be completed in a single turn.</string>
     <string name="start_score">Start score</string>
     <string name="score_type">Score type</string>
     <string name="on_step_success">On step success</string>
