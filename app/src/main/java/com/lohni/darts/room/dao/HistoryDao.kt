@@ -44,7 +44,7 @@ interface HistoryDao {
 
     @Query(
         "SELECT s_id as id, s_ordinal as ordinal, " +
-                "cast(sum(t_score) as float) / count(t_score)*3 as winnerAvg, " +
+                "cast(sum(case when not t_bust then t_score else 0 end) as float) / count(t_score)*3 as winnerAvg, " +
                 "player.* " +
                 "FROM 'SET' " +
                 "JOIN LEG ON l_set = s_id " +
@@ -58,7 +58,7 @@ interface HistoryDao {
 
     @Query(
         "SELECT l_id as id, l_ordinal as ordinal, " +
-                "cast(sum(t_score) as float) / count(t_score)*3 as winnerAvg, " +
+                "cast(sum(case when not t_bust then t_score else 0 end) as float) / count(t_score)*3 as winnerAvg, " +
                 "player.* " +
                 "FROM LEG " +
                 "JOIN THROW ON t_leg = l_id and t_player = l_winner " +

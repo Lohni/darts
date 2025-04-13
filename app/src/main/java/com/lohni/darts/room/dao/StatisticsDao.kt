@@ -18,7 +18,6 @@ interface StatisticsDao {
     @Query("SELECT * FROM GAME_MODE")
     fun getAllGameModes(): Flow<List<GameMode>>
 
-    //@Query("SELECT game_mode.* FROM GAME JOIN GAME_MODE ON gm_id = g_game_mode ORDER BY g_id DESC LIMIT 1")
     @Query("SELECT game_mode.* FROM GAME_MODE JOIN GAME ON gm_id = g_game_mode ORDER BY g_id DESC LIMIT 1")
     fun getLastGameMode(): Flow<GameMode?>
 

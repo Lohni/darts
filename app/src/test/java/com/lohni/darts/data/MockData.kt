@@ -1,11 +1,11 @@
 package com.lohni.darts.data
 
+import com.lohni.darts.common.FormatUtil
 import com.lohni.darts.game.GameState
 import com.lohni.darts.room.dto.GameConfigurationView
 import com.lohni.darts.room.dto.GameModeConfigView
 import com.lohni.darts.room.dto.GameModeView
 import com.lohni.darts.room.entities.CheckoutTable
-import com.lohni.darts.room.entities.Game
 import com.lohni.darts.room.entities.GameMode
 import com.lohni.darts.room.entities.GameModeConfig
 import com.lohni.darts.room.entities.GameModeStep
@@ -41,17 +41,15 @@ fun GameView.assertUiState(
     Assert.assertEquals(setsWon, currPlayer.setsWon)
 }
 
-fun createGameMode(): GameMode {
-    return GameMode(
-        gmType = GameModeType.CLASSIC,
-        gmStartScore = 301
-    )
-}
-
-fun createGameModeConfig(checkOut: FieldType = FieldType.ALL): GameModeConfig {
-    return GameModeConfig(
-        gmcCheckOut = checkOut
-    )
+fun PlayerView.assertAverage(
+    pId: Int,
+    score: Float,
+    average: Float
+) {
+    val format = FormatUtil.createDecimalFormat("0.00")
+    Assert.assertEquals(pId, this.player.pId)
+    Assert.assertEquals(score, this.score)
+    Assert.assertEquals(format.format(average), format.format(this.average))
 }
 
 fun createPlayers(num: Int): List<Player> {

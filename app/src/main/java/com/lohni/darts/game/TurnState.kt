@@ -73,9 +73,9 @@ class TurnState(val player: Player, val step: GameModeStep? = null) {
 
     fun getThrowsAsList(): List<Throw> {
         val list = mutableListOf<Throw>()
-        throwOne?.let { list.add(it) }
-        throwTwo?.let { list.add(it) }
-        throwThree?.let { list.add(it) }
+        throwOne?.let { list.add(it.copy(tBust = busted)) }
+        throwTwo?.let { list.add(it.copy(tBust = busted)) }
+        throwThree?.let { list.add(it.copy(tBust = busted)) }
         return list
     }
 

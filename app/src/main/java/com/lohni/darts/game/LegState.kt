@@ -155,7 +155,7 @@ abstract class LegState(
         val darts = playerThrows.count()
         val score = scoreState[currTurn.player] ?: 0f
         val average =
-            if (darts == 0) 0f else (playerThrows.sumOf { it.tScore.toDouble() } / darts) * 3
+            if (darts == 0) 0f else (playerThrows.sumOf { if (it.tBust) 0.0 else it.tScore.toDouble() } / darts) * 3
 
         val nextPlayerIndex = nextPlayerIndex()
         var nextPlayer: Player? = null
