@@ -1,7 +1,6 @@
 package com.lohni.darts.room
 
 import android.content.Context
-import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -25,9 +24,10 @@ import com.lohni.darts.room.entities.ScoreCalculation
 import com.lohni.darts.room.entities.Set
 import com.lohni.darts.room.entities.Setting
 import com.lohni.darts.room.entities.Throw
+import com.lohni.darts.room.migration.MIGRATION_1_2
 
 @Database(
-    version = 1,
+    version = 2,
     entities = [Game::class, GameMode::class, GameModeConfig::class, GameModeStep::class, GamePlayer::class, Leg::class, Player::class, ScoreCalculation::class, Set::class, Setting::class, Throw::class, CheckoutTable::class]
 )
 @TypeConverters(Converters::class)
@@ -55,7 +55,9 @@ abstract class AppDatabase : RoomDatabase() {
                         context.applicationContext,
                         AppDatabase::class.java,
                         DATABASE_NAME
-                    ).createFromAsset("database/darts.db").build()
+                    ).createFromAsset("database/darts.db")
+                        .addMigrations(MIGRATION_1_2)
+                        .build()
 
                     INSTANCE = instance
                 }

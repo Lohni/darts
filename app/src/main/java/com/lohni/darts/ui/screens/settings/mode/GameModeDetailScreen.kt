@@ -340,7 +340,7 @@ fun ClassicMode(gameModeViewModel: GameModeViewModel) {
                 initialItem = gameModeConfig.gmcCheckOut,
                 itemText = { it.label },
                 inputLabel = stringResource(R.string.check_out),
-                selectOptions = FieldType.entries,
+                selectOptions = FieldType.entries.filter { it != FieldType.Single },
                 enabled = editable
             ) {
                 gameModeViewModel.setGameModeConfig(gameModeConfig.copy(gmcCheckOut = it))

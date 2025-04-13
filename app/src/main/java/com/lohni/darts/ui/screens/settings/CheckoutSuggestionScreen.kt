@@ -129,7 +129,7 @@ fun CheckoutSuggestionScreen(navController: NavController) {
                     initialItem = selectedCheckoutType,
                     itemText = FieldType::name,
                     inputLabel = stringResource(R.string.checkout_type),
-                    selectOptions = FieldType.entries.filter { it != FieldType.ALL }
+                    selectOptions = FieldType.entries.filter { it != FieldType.Single }
                 ) {
                     checkoutSuggestionViewModel.changeCheckoutType(it)
                     selectedCheckoutType = it
