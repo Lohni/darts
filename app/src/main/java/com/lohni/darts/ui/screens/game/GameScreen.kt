@@ -256,7 +256,7 @@ fun GameScreen(navController: NavController) {
                             Text(
                                 stringResource(R.string.next_player),
                                 fontSize = 20.sp,
-                                textAlign = TextAlign.Center,
+                                textAlign = TextAlign.End,
                                 modifier = Modifier.weight(0.3f)
                             )
                             val format = FormatUtil.createDecimalFormat("0.#")

@@ -165,6 +165,52 @@ interface StatisticsDao {
     fun getThrowsPerLegForPlayerAndGameMode(gmId: Int, pId: Int): Flow<List<LegGroupedThrows>>
 
     /**
+     * Step
+     */
+    @Query(
+        """
+            SELECT sum(t_score) + gm_start_score  FROM GAME
+            JOIN GAME_MODE on gm_id = g_game_mode
+            JOIN 'SET' on s_game = g_id
+            JOIN LEG on l_set = s_id
+            JOIN THROW on t_leg = l_id
+            WHERE g_game_mode = :gmId and t_player = :pId
+            GROUP BY t_leg
+            ORDER BY sum(t_score) ASC
+            LIMIT 1
+        """
+    )
+    fun getStepBestScoreByLowestScore(gmId: Int, pId: Int): Flow<Float>
+
+    @Query(
+        """
+            SELECT sum(t_score) + gm_start_score FROM GAME
+            JOIN GAME_MODE on gm_id = g_game_mode
+            JOIN 'SET' on s_game = g_id
+            JOIN LEG on l_set = s_id
+            JOIN THROW on t_leg = l_id
+            WHERE g_game_mode = :gmId and t_player = :pId
+            GROUP BY t_leg
+            ORDER BY sum(t_score) DESC
+            LIMIT 1
+        """
+    )
+    fun getStepBestScoreByHighestScore(gmId: Int, pId: Int): Flow<Float>
+
+    @Query(
+        """
+            SELECT count(t_score) FROM GAME
+            JOIN 'SET' on s_game = g_id
+            JOIN LEG on l_set = s_id
+            JOIN THROW on t_leg = l_id
+            WHERE g_game_mode = :gmId and t_player = :pId and g_winner = :pId
+            GROUP BY t_leg
+            LIMIT 1
+        """
+    )
+    fun getStepBestScoreByFirstToFinish(gmId: Int, pId: Int): Flow<Float>
+
+    /**
      * Competitive
      */
     @Query(
@@ -200,4 +246,5 @@ interface StatisticsDao {
     )
     @Transaction
     fun getGameSetLegForPlayerCombination(gmId: Int, p1: Int, p2: Int): Flow<List<GameSetView>>
+
 }

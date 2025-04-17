@@ -21,6 +21,7 @@ import com.lohni.darts.room.entities.Player
 import com.lohni.darts.room.entities.Throw
 import com.lohni.darts.room.enums.FieldType
 import com.lohni.darts.room.enums.GameModeType
+import com.lohni.darts.room.enums.StepWinCondition
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -44,6 +45,7 @@ class StatisticsViewModel(
     var doubles = mutableIntStateOf(0)
     var misses = mutableIntStateOf(0)
     var highestFinish = mutableFloatStateOf(0f)
+    var bestScore = mutableFloatStateOf(0f)
     var eightyPlus = mutableIntStateOf(0)
     var hundredPlus = mutableIntStateOf(0)
     var hundredFourtyPlus = mutableIntStateOf(0)
@@ -78,12 +80,7 @@ class StatisticsViewModel(
                 availableGameModes.addAll(it)
             }
 
-            getSharedStatistics()
-
-            // Classic stats
-            if (gameMode.value.gmType == GameModeType.CLASSIC) {
-                getClassicStatistics()
-            }
+            getAllStats()
 
             statistisDao.getLastGameMode().first {
                 it?.let { changeGameMode(it) }
@@ -95,20 +92,14 @@ class StatisticsViewModel(
     fun changePlayer(p: Player) {
         player.value = p
         viewModelScope.launch {
-            getSharedStatistics()
-            if (gameMode.value.gmType == GameModeType.CLASSIC) {
-                getClassicStatistics()
-            }
+            getAllStats()
         }
     }
 
     fun changeGameMode(gm: GameMode) {
         gameMode.value = gm
         viewModelScope.launch {
-            getSharedStatistics()
-            if (gm.gmType == GameModeType.CLASSIC) {
-                getClassicStatistics()
-            }
+            getAllStats()
         }
     }
 
@@ -116,6 +107,15 @@ class StatisticsViewModel(
         playerToCompare.value = p
         viewModelScope.launch {
             getCompetitiveStatistics()
+        }
+    }
+
+    private suspend fun getAllStats() {
+        getSharedStatistics()
+        if (gameMode.value.gmType == GameModeType.STEP) {
+            getStepStatistics()
+        } else {
+            getClassicStatistics()
         }
     }
 
@@ -254,6 +254,30 @@ class StatisticsViewModel(
             180f
         ).first {
             hundredEightyPlus.intValue = it
+            true
+        }
+    }
+
+    private suspend fun getStepStatistics() {
+        if (gameMode.value.gmId == 0) return
+
+        statistisDao.getGameModeConfig(gameMode.value.gmConfig).first { gmc ->
+            if (gmc.gmcStepWinCondition == StepWinCondition.FIRST_TO_FINISH) {
+                statistisDao.getStepBestScoreByFirstToFinish(gameMode.value.gmId, player.value.pId).first {
+                    bestScore.floatValue = it
+                    true
+                }
+            } else if (gmc.gmcStepWinCondition == StepWinCondition.LOWEST_SCORE) {
+                statistisDao.getStepBestScoreByLowestScore(gameMode.value.gmId, player.value.pId).first {
+                    bestScore.floatValue = it
+                    true
+                }
+            } else {
+                statistisDao.getStepBestScoreByHighestScore(gameMode.value.gmId, player.value.pId).first {
+                    bestScore.floatValue = it
+                    true
+                }
+            }
             true
         }
     }

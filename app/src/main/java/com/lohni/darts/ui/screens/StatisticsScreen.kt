@@ -173,6 +173,7 @@ fun OverallStatisticsScreen(statisticsViewModel: StatisticsViewModel) {
             val hundredFourtyPlus by remember { statisticsViewModel.hundredFourtyPlus }
             val hundredEightyPlus by remember { statisticsViewModel.hundredEightyPlus }
             val highestFinish by remember { statisticsViewModel.highestFinish }
+            val bestScore by remember { statisticsViewModel.bestScore }
             val scoringDarts by remember { statisticsViewModel.scoringDarts }
             val finishDarts by remember { statisticsViewModel.finishDarts }
             val scoringAverage by remember { statisticsViewModel.scoringAverage }
@@ -183,27 +184,27 @@ fun OverallStatisticsScreen(statisticsViewModel: StatisticsViewModel) {
             StatisticsEntry(stringResource(R.string.darts_per_leg), "", format.format(dartsPerLeg))
             StatisticsEntry(stringResource(R.string.triple_count), "", triples.toString())
             StatisticsEntry(stringResource(R.string.double_count), "", doubles.toString())
-            StatisticsEntry(stringResource(R.string.miss_bust), "", misses.toString())
-            StatisticsEntry(
-                stringResource(R.string.highest_finish),
-                "",
-                format.format(highestFinish)
-            )
-            HorizontalDivider(modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
-            StatisticsEntry(stringResource(R.string.eightyplus), "", eightyPlus.toString())
-            StatisticsEntry(stringResource(R.string.hundredplus), "", hundredPlus.toString())
-            StatisticsEntry(
-                stringResource(R.string.hundred_fourty_plus),
-                "",
-                hundredFourtyPlus.toString()
-            )
-            StatisticsEntry(
-                stringResource(R.string.hundred_eighty),
-                "",
-                hundredEightyPlus.toString()
-            )
 
             if (gameMode.gmType == GameModeType.CLASSIC) {
+                StatisticsEntry(stringResource(R.string.miss_bust), "", misses.toString())
+                StatisticsEntry(
+                    stringResource(R.string.highest_finish),
+                    "",
+                    format.format(highestFinish)
+                )
+                HorizontalDivider(modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
+                StatisticsEntry(stringResource(R.string.eightyplus), "", eightyPlus.toString())
+                StatisticsEntry(stringResource(R.string.hundredplus), "", hundredPlus.toString())
+                StatisticsEntry(
+                    stringResource(R.string.hundred_fourty_plus),
+                    "",
+                    hundredFourtyPlus.toString()
+                )
+                StatisticsEntry(
+                    stringResource(R.string.hundred_eighty),
+                    "",
+                    hundredEightyPlus.toString()
+                )
                 HorizontalDivider(modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
                 StatisticsEntry(
                     stringResource(R.string.darts_to_score),
@@ -224,6 +225,12 @@ fun OverallStatisticsScreen(statisticsViewModel: StatisticsViewModel) {
                     stringResource(R.string.finish_average),
                     stringResource(R.string.finish_average_info),
                     format.format(finishAverage)
+                )
+            } else if (gameMode.gmType == GameModeType.STEP) {
+                StatisticsEntry(
+                    stringResource(R.string.best_score),
+                    "",
+                    format.format(bestScore)
                 )
             }
         }

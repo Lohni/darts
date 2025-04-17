@@ -12,6 +12,7 @@ import com.lohni.darts.room.dao.GameDao
 import com.lohni.darts.room.dto.GameSummary
 import com.lohni.darts.room.entities.Game
 import com.lohni.darts.room.entities.Player
+import com.lohni.darts.room.enums.StepWinCondition
 import com.lohni.darts.ui.screens.game.GameRoute
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -82,9 +83,16 @@ class GameSummaryViewModel(private val gameDao: GameDao) : ViewModel() {
 
     fun setGameAndLegId(gId: Int, lId: Int) {
         viewModelScope.launch {
-            gameDao.getGameLegSummary(gId, lId).first { gameSummary ->
-                gameSummaryList.clear()
-                gameSummaryList.addAll(gameSummary)
+            gameDao.getGameModeConfigByGameId(gId).first { gmc ->
+                gameDao.getGameLegSummary(gId, lId).first { gameSummary ->
+                    gameSummaryList.clear()
+                    if (gmc.gmcStepWinCondition == StepWinCondition.HIGHEST_SCORE) {
+                        gameSummaryList.addAll(gameSummary.sortedByDescending { it.score })
+                    } else {
+                        gameSummaryList.addAll(gameSummary.sortedBy { it.score })
+                    }
+                }
+                true
             }
         }
     }

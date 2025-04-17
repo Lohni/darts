@@ -40,7 +40,7 @@ data class GameModeConfig(
     @ColumnInfo(
         name = "gmc_step_win_condition",
         defaultValue = "0"
-    ) var gmcStepWinCondition: StepWinCondition = StepWinCondition.HIGHEST_SCORE,
+    ) var gmcStepWinCondition: StepWinCondition = StepWinCondition.LOWEST_SCORE,
     @ColumnInfo(name = "gmc_success_score_calculation") var gmcSuccessCalculation: Int? = null,
     @ColumnInfo(name = "gmc_failure_score_calculation") var gmcFailureCalculation: Int? = null
 )
