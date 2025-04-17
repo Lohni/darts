@@ -249,13 +249,13 @@ fun StatisticsEntry(label: String, info: String, value: List<String>) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
     ) {
-        Text(label, modifier = Modifier.weight(0.4f), fontSize = 17.sp)
+        Text(label, modifier = Modifier.weight(0.6f), fontSize = 17.sp)
 
         if (info.isNotEmpty()) {
             var showDialog by remember { mutableStateOf(false) }
             Icon(
                 modifier = Modifier
-                    .padding(4.dp)
+                    .padding(top = 4.dp)
                     .size(20.dp)
                     .clickable {
                         showDialog = true
@@ -273,7 +273,7 @@ fun StatisticsEntry(label: String, info: String, value: List<String>) {
             }
         }
 
-        val weight = 0.6f / value.size
+        val weight = 0.4f / value.size
         for (v in value) {
             Text(v, modifier = Modifier.weight(weight), textAlign = TextAlign.End, fontSize = 17.sp)
         }

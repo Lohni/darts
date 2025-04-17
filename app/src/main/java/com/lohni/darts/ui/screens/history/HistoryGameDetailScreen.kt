@@ -130,7 +130,7 @@ fun HistoryGameStatistics(gameId: Int) {
                 stringResource(R.string.game),
                 "${stringResource(R.string.set)} (${game.gSets})",
                 "${stringResource(R.string.leg)} (${game.gLegs})",
-                stringResource(R.string.average)
+                stringResource(R.string.average_short)
             )
             HorizontalDivider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
         }
