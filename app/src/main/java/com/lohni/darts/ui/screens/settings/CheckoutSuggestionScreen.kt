@@ -658,7 +658,7 @@ private fun checkWrongFieldType(
     if (fieldTwo.fId > 0) lastFieldType = fieldTypeTwo
     if (fieldThree.fId > 0) lastFieldType = fieldTypeThree
 
-    if (required == FieldType.Single || required == lastFieldType) return ""
+    if (required == FieldType.ALL || required == lastFieldType) return ""
 
     return lastFieldType.label
 }
