@@ -305,12 +305,12 @@ fun ScoreTab(gameModeViewModel: GameModeViewModel) {
     ) {
         ScoreCalculation(
             stringResource(R.string.on_step_success),
-            gameModeViewModel.successCalculation,
+            gameModeViewModel.successCalculation.value,
             editable
         ) { gameModeViewModel.setSuccessCalculation(it) }
         ScoreCalculation(
             stringResource(R.string.on_step_failure),
-            gameModeViewModel.failureCalculation,
+            gameModeViewModel.failureCalculation.value,
             editable
         ) { gameModeViewModel.setFailureCalculation(it) }
     }
@@ -427,11 +427,11 @@ fun StepItem(gameModeStep: GameModeStep, editable: Boolean = false) {
 @Composable
 fun ScoreCalculation(
     title: String,
-    calculation: MutableState<ScoreCalculation>,
+    calculation: ScoreCalculation,
     enabled: Boolean = true,
     onCalcChange: (ScoreCalculation) -> Unit
 ) {
-    val calcSchema by remember { calculation }
+    val calcSchema = calculation
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -599,7 +599,10 @@ fun ScoreCalculation(
             label = { Text(stringResource(R.string.value)) },
             enabled = enabled && calcSchema.scByValueModifier != ScoreModifier.NONE,
             onValueChange = {
-                val changedValue = if (it != "") it else "0"
+                var changedValue = if (it != "") it else "0"
+                if (changedValue != "0" && calcSchema.scByValue == 0) {
+                    changedValue = it.replaceFirst("0", "")
+                }
                 onCalcChange.invoke(calcSchema.copy(scByValue = changedValue.toInt()))
             },
             modifier = Modifier
