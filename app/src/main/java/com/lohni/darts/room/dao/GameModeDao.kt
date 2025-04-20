@@ -27,7 +27,7 @@ interface GameModeDao {
     @Query("SELECT * FROM SCORE_CALCULATION WHERE SC_ID = :id")
     fun getScoreCalculationById(id: Int): Flow<ScoreCalculation>
 
-    @Query("SELECT * FROM GAME_MODE_STEP WHERE gms_gm_id = :id")
+    @Query("SELECT * FROM GAME_MODE_STEP WHERE gms_gm_id = :id ORDER BY gms_ordinal ASC")
     fun getGameModeStepsForGameMode(id: Int): Flow<List<GameModeStep>>
 
     @Query("SELECT game_mode.* FROM GAME_MODE JOIN GAME on g_game_mode = gm_id order by g_id desc limit 1")
