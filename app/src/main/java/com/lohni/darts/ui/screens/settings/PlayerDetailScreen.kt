@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -82,36 +83,85 @@ fun PlayerDetailScreen(navController: NavController) {
                         if (!edit) stringResource(R.string.create_new_player) else stringResource(R.string.edit_player)
                     Text(title, fontSize = 18.sp)
                 }
-                if (edit && player.pId > 0) {
-                    Column(
-                        horizontalAlignment = Alignment.End,
-                        modifier = Modifier
-                            .weight(0.5F)
-                            .padding(end = 16.dp)
-                    ) {
-                        var showDialog by remember { mutableStateOf(false) }
+                Column(
+                    horizontalAlignment = Alignment.End,
+                    modifier = Modifier
+                        .weight(0.5F)
+                        .padding(end = 16.dp)
+                ) {
+                    Row {
+                        var showPlayerDefaultDialog by remember { mutableStateOf(false) }
+                        val color =
+                            if (player.pDefault == 1) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.onBackground
                         Icon(
                             modifier = Modifier
+                                .padding(end = 8.dp)
                                 .clickable {
-                                    showDialog = true
+                                    showPlayerDefaultDialog = true
                                 },
-                            imageVector = Icons.Rounded.Delete,
+                            imageVector = Icons.Rounded.Star,
+                            tint = color,
                             contentDescription = null
                         )
                         BasicDialog(
-                            showDialog,
-                            stringResource(R.string.delete),
-                            stringResource(R.string.delete),
-                            Icons.Rounded.Delete,
+                            showPlayerDefaultDialog,
+                            if (player.pDefault == 1) stringResource(R.string.unset_default) else stringResource(
+                                R.string.set_default
+                            ),
+                            stringResource(R.string.proceed),
+                            Icons.Rounded.Star,
                             onDissmiss = {
-                                showDialog = false
+                                showPlayerDefaultDialog = false
                                 if (it) {
-                                    playerViewModel.deletePlayer()
-                                    navController.popBackStack()
+                                    if (player.pDefault == 1) {
+                                        playerViewModel.unsetPlayerAsDefault()
+                                    } else {
+                                        playerViewModel.setPlayerAsDefault()
+                                    }
                                 }
                             }
                         ) {
-                            Text("${stringResource(R.string.delete_player)} ${player.pName}?")
+                            if (player.pDefault == 1) {
+                                Text(
+                                    stringResource(
+                                        R.string.unset_player_default_dialog,
+                                        player.pName
+                                    )
+                                )
+                            } else {
+                                Text(
+                                    stringResource(
+                                        R.string.set_player_default_dialog,
+                                        player.pName
+                                    )
+                                )
+                            }
+                        }
+                        if (edit && player.pId > 0) {
+                            var showDialog by remember { mutableStateOf(false) }
+                            Icon(
+                                modifier = Modifier
+                                    .clickable {
+                                        showDialog = true
+                                    },
+                                imageVector = Icons.Rounded.Delete,
+                                contentDescription = null
+                            )
+                            BasicDialog(
+                                showDialog,
+                                stringResource(R.string.delete),
+                                stringResource(R.string.delete),
+                                Icons.Rounded.Delete,
+                                onDissmiss = {
+                                    showDialog = false
+                                    if (it) {
+                                        playerViewModel.deletePlayer()
+                                        navController.popBackStack()
+                                    }
+                                }
+                            ) {
+                                Text("${stringResource(R.string.delete_player)} ${player.pName}?")
+                            }
                         }
                     }
                 }

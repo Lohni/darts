@@ -48,8 +48,16 @@ class GameSelectionViewModel(
 
             playerDao.getAllPlayers().first { all ->
                 availablePlayers.value = all
+                val defaultPlayer = all.firstOrNull { p -> p.pDefault == 1 }
+
                 playerDao.getLastUsedPlayers().first { players ->
-                    players.forEach { p ->
+                    val mutablePlayerList = players.toMutableList()
+
+                    if (mutablePlayerList.isEmpty() && defaultPlayer != null) {
+                        mutablePlayerList.add(defaultPlayer)
+                    }
+
+                    mutablePlayerList.forEach { p ->
                         statisticsDao.getPlayerAverageForGameMode(
                             selectedGameMode.value.gmId,
                             p.pId
@@ -59,7 +67,7 @@ class GameSelectionViewModel(
                     }
 
                     val newList = availablePlayers.value.toMutableList()
-                    newList.removeAll(players)
+                    newList.removeAll(mutablePlayerList)
                     availablePlayers.value = newList.toList()
                     true
                 }

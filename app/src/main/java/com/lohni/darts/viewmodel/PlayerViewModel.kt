@@ -46,6 +46,21 @@ class PlayerViewModel(private val playerDao: PlayerDao, private val historyDao: 
         }
     }
 
+    fun setPlayerAsDefault() {
+        viewModelScope.launch(Dispatchers.IO) {
+            playerDao.setAllPlayersAsNonDefault()
+            player.value = player.value.copy(pDefault = 1)
+            playerDao.updatePlayer(player.value)
+        }
+    }
+
+    fun unsetPlayerAsDefault() {
+        viewModelScope.launch(Dispatchers.IO) {
+            player.value = player.value.copy(pDefault = 0)
+            playerDao.updatePlayer(player.value)
+        }
+    }
+
     fun saveState() {
         viewModelScope.launch(Dispatchers.IO) {
             if (player.value.pId == 0) playerDao.createPlayer(player.value)

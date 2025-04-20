@@ -25,9 +25,10 @@ import com.lohni.darts.room.entities.Set
 import com.lohni.darts.room.entities.Setting
 import com.lohni.darts.room.entities.Throw
 import com.lohni.darts.room.migration.MIGRATION_1_2
+import com.lohni.darts.room.migration.MIGRATION_2_3
 
 @Database(
-    version = 2,
+    version = 3,
     entities = [Game::class, GameMode::class, GameModeConfig::class, GameModeStep::class, GamePlayer::class, Leg::class, Player::class, ScoreCalculation::class, Set::class, Setting::class, Throw::class, CheckoutTable::class]
 )
 @TypeConverters(Converters::class)
@@ -57,6 +58,7 @@ abstract class AppDatabase : RoomDatabase() {
                         DATABASE_NAME
                     ).createFromAsset("database/darts.db")
                         .addMigrations(MIGRATION_1_2)
+                        .addMigrations(MIGRATION_2_3)
                         .build()
 
                     INSTANCE = instance

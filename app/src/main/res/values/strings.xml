@@ -36,6 +36,8 @@
     <string name="name">Name</string>
     <string name="steps">Steps</string>
     <string name="proceed">Proceed</string>
+    <string name="set_default">Set player as default</string>
+    <string name="unset_default">Remove player as default</string>
 
     <!-- HomeScreen -->
     <string name="quick_settings">Quick settings</string>
@@ -141,6 +143,8 @@
     <string name="create_new_player">Create new player</string>
     <string name="edit_player">Edit player</string>
     <string name="delete_player">Delete player</string>
+    <string name="set_player_default_dialog">Set player %1$s as default?</string>
+    <string name="unset_player_default_dialog">Player %1$s will no longer be the default.</string>
     <string name="activity">Activity</string>
     <!-- HistoryScreen -->
     <string name="set_leg_info_append">S/L:</string>

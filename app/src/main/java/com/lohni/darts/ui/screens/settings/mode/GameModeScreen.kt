@@ -99,8 +99,8 @@ fun GameModeItems(gameMode: GameMode, onCLick: () -> Unit = {}) {
         Box(
             contentAlignment = Alignment.CenterStart,
             modifier = Modifier
-                .height(64.dp)
-                .padding(start = 16.dp, end = 16.dp)
+                .height(58.dp)
+                .padding(start = 8.dp, end = 8.dp)
                 .weight(1.0f)
                 .clip(shape = RoundedCornerShape(5.dp, 5.dp, 5.dp, 5.dp))
                 .background(color = MaterialTheme.colorScheme.surfaceContainerHigh)
@@ -109,15 +109,17 @@ fun GameModeItems(gameMode: GameMode, onCLick: () -> Unit = {}) {
                 }
         ) {
             Row(
-                modifier = Modifier.padding(start = 16.dp),
+                modifier = Modifier.padding(start = 8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(
                     modifier = Modifier.padding(start = 8.dp),
                     verticalArrangement = Arrangement.Center
                 ) {
+                    Spacer(Modifier.weight(1f))
                     Text(gameMode.gmName, fontSize = 18.sp)
                     Text("${stringResource(R.string.type)}: ${gameMode.gmType.label}", fontSize = 14.sp)
+                    Spacer(Modifier.weight(1f))
                 }
                 Column(
                     modifier = Modifier

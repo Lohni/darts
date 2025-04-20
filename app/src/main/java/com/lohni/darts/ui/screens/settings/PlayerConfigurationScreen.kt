@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.Icon
@@ -114,6 +115,18 @@ fun PlayerItem(player: Player, onCLick: () -> Unit = {}) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(
+                    modifier = Modifier,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    if (player.pDefault == 1) {
+                        Icon(
+                            Icons.Default.Star,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
+                Column(
                     modifier = Modifier.padding(start = 16.dp),
                     verticalArrangement = Arrangement.Center
                 ) {
@@ -138,5 +151,5 @@ fun PlayerItem(player: Player, onCLick: () -> Unit = {}) {
 @Composable
 @Preview
 private fun PreviewPlayerItem() {
-    PlayerItem(Player(0, "Player One"))
+    PlayerItem(Player(0, "Player One", pDefault = 1))
 }

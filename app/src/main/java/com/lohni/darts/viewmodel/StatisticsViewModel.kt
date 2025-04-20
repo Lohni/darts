@@ -74,6 +74,10 @@ class StatisticsViewModel(
     init {
         viewModelScope.launch {
             playerDao.getAllPlayers().first {
+                it.firstOrNull { p -> p.pDefault == 1 }?.let { p ->
+                    player.value = p
+                    true
+                }
                 availablePlayers.addAll(it)
             }
             statistisDao.getAllGameModes().first {
