@@ -41,7 +41,9 @@ class CheckoutState(
     private fun getSuggestionForClassic(view: PlayerView): CheckoutSuggestion {
         var currentScore = view.score
         val tThrows = view.getThrows()
-        currentScore += tThrows.sumOf { it.tScore.toDouble() }.toFloat()
+        if (tThrows.none { it.tBust }) {
+            currentScore += tThrows.sumOf { it.tScore.toDouble() }.toFloat()
+        }
 
         val suggestionArray = defaultSuggestion.copyOf()
         var baseSuggestion =

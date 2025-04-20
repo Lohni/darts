@@ -104,6 +104,7 @@ fun createPlayerView(
             tPlayer = -1,
             tField = fieldOne,
             tFieldType = fieldTypeOne,
+            tBust = fieldOne == Field.ZERO,
             tScore = (fieldOne.fId * fieldTypeOne.ftId).toFloat()
         ) else null,
         if (fieldTwo != Field.NONE) Throw(
@@ -111,6 +112,7 @@ fun createPlayerView(
             tPlayer = -1,
             tField = fieldTwo,
             tFieldType = fieldTypeTwo,
+            tBust = fieldTwo == Field.ZERO,
             tScore = (fieldTwo.fId * fieldTypeTwo.ftId).toFloat()
         ) else null,
         if (fieldThree != Field.NONE) Throw(
@@ -118,6 +120,7 @@ fun createPlayerView(
             tPlayer = -1,
             tField = fieldThree,
             tFieldType = fieldTypeThree,
+            tBust = fieldThree == Field.ZERO,
             tScore = (fieldThree.fId * fieldTypeThree.ftId).toFloat()
         ) else null,
         stepRequirement = stepRequirement,

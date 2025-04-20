@@ -64,6 +64,54 @@ class CheckoutStateClassicTest {
         ).assert("T20", "T20", "D12")
     }
 
+    @Test
+    fun testOneThrowBust() {
+        val checkoutState = CheckoutState(emptyMap(), checkoutMap(), emptyList())
+        checkoutState.getSuggestion(
+            createPlayerView(
+                2f,
+                fieldOne = Field.ONE,
+                fieldTypeOne = FieldType.Single,
+                fieldTwo = Field.ZERO,
+                fieldTypeTwo = FieldType.Single,
+                fieldThree = Field.ZERO,
+                fieldTypeThree = FieldType.Single,
+            )
+        ).assert("D1", "-", "-")
+    }
+
+    @Test
+    fun testOneThrowBustOverthrow() {
+        val checkoutState = CheckoutState(emptyMap(), checkoutMap(), emptyList())
+        checkoutState.getSuggestion(
+            createPlayerView(
+                2f,
+                fieldOne = Field.FIVE,
+                fieldTypeOne = FieldType.Single,
+                fieldTwo = Field.ZERO,
+                fieldTypeTwo = FieldType.Single,
+                fieldThree = Field.ZERO,
+                fieldTypeThree = FieldType.Single,
+            )
+        ).assert("D1", "-", "-")
+    }
+
+    @Test
+    fun testTwoThrowsBust() {
+        val checkoutState = CheckoutState(emptyMap(), checkoutMap(), emptyList())
+        checkoutState.getSuggestion(
+            createPlayerView(
+                4f,
+                fieldOne = Field.TWO,
+                fieldTypeOne = FieldType.Single,
+                fieldTwo = Field.ONE,
+                fieldTypeTwo = FieldType.Single,
+                fieldThree = Field.ZERO,
+                fieldTypeThree = FieldType.Single,
+            )
+        ).assert("D2", "D1", "-")
+    }
+
     private fun CheckoutState.CheckoutSuggestion.assert(
         s1: String,
         s2: String,
