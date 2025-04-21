@@ -246,14 +246,14 @@ fun checkoutMap(): Map<Float, CheckoutTable> {
     return map
 }
 
-fun createClassicGameConfiguration(checkOut: FieldType = FieldType.ALL): GameConfigurationView {
+fun createClassicGameConfiguration(checkOut: FieldType = FieldType.ALL, checkIn: FieldType = FieldType.ALL): GameConfigurationView {
     return GameConfigurationView(
         GameModeView(
             GameMode(gmType = GameModeType.CLASSIC, gmStartScore = 301),
             listOf()
         ),
         GameModeConfigView(
-            GameModeConfig(gmcCheckOut = checkOut),
+            GameModeConfig(gmcCheckOut = checkOut, gmcCheckIn = checkIn),
             null,
             null
         )

@@ -229,4 +229,53 @@ class ClassicStateScoreTest {
         gameState.onThrow(Field.EIGHTEEN, FieldType.Single)
         gameState.getGameView().assertUiState(0, 3f)
     }
+
+    @Test
+    fun twoPlayerDoubleInDoubleOut301() {
+        var winningPlayer: Int? = null
+        val gameState = GameState(
+            1,
+            1,
+            createClassicGameConfiguration(checkOut = FieldType.Double, checkIn = FieldType.Double),
+            createPlayers(2),
+            { _, p -> winningPlayer = p.pId })
+
+        //Player0
+        gameState.getGameView().assertUiState(0, 301f)
+        gameState.onThrow(Field.TWENTY, FieldType.Triple)
+        gameState.getGameView().assertUiState(0, 301f, 0f)
+        gameState.onThrow(Field.TWENTY, FieldType.Single)
+        gameState.getGameView().assertUiState(0, 301f, 0f, 0f)
+        gameState.onThrow(Field.TWENTY, FieldType.Single)
+        //Player1
+        gameState.getGameView().assertUiState(1, 301f)
+        gameState.onThrow(Field.TWENTY, FieldType.Triple)
+        gameState.getGameView().assertUiState(1, 301f, 0f)
+        gameState.onThrow(Field.TWENTY, FieldType.Single)
+        gameState.getGameView().assertUiState(1, 301f, 0f, 0f)
+        gameState.onThrow(Field.TWENTY, FieldType.Single)
+        //Player0
+        gameState.getGameView().assertUiState(0, 301f)
+        gameState.onThrow(Field.TWENTY, FieldType.Double)
+        gameState.onThrow(Field.TWENTY, FieldType.Triple)
+        gameState.onThrow(Field.ZERO, FieldType.Single)
+        //Player1
+        gameState.getGameView().assertUiState(1, 301f)
+        gameState.onThrow(Field.TWENTY, FieldType.Double)
+        gameState.onThrow(Field.TWENTY, FieldType.Triple)
+        gameState.onThrow(Field.ZERO, FieldType.Single)
+        //Player0
+        gameState.getGameView().assertUiState(0, 201f)
+        gameState.onThrow(Field.TWENTY, FieldType.Triple)
+        gameState.onThrow(Field.TWENTY, FieldType.Double)
+        gameState.onThrow(Field.ZERO, FieldType.Single)
+        //Player1
+        gameState.onThrow(Field.TWENTY, FieldType.Triple)
+        gameState.onThrow(Field.TWENTY, FieldType.Single)
+        gameState.onThrow(Field.TWENTY, FieldType.Single)
+        //Player0
+        gameState.onThrow(Field.SEVENTEEN, FieldType.Triple)
+        gameState.onThrow(Field.TWENTYFIVE, FieldType.Double)
+        Assert.assertEquals(0, winningPlayer)
+    }
 }

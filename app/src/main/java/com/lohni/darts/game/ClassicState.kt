@@ -18,7 +18,7 @@ class ClassicState(
     private val gameModeConfig = gameConfigurationView.gameModeConfig.gameModeConfig
 
     override fun createThrow(field: Field, fieldType: FieldType, currScore: Float): Throw {
-        val throwScore = calcThrowScore(field, fieldType)
+        val throwScore = calcThrowScore(field, fieldType, currScore)
         val isBust = checkBust(throwScore, currScore, fieldType)
         return createThrow(
             field,
@@ -53,9 +53,14 @@ class ClassicState(
         return currTurn.player
     }
 
-    private fun calcThrowScore(field: Field, fieldType: FieldType): Float {
-        return if (fieldType == FieldType.ALL) {
-            field.fId.toFloat()
+    private fun calcThrowScore(field: Field, fieldType: FieldType, currScore: Float): Float {
+        //Test Check-In
+        return if (
+            currScore == gameConfigurationView.gameMode.gameMode.gmStartScore.toFloat()
+            && gameModeConfig.gmcCheckIn != FieldType.ALL
+            && fieldType != gameModeConfig.gmcCheckIn
+        ) {
+            0f
         } else {
             (field.fId * fieldType.ftId).toFloat()
         }
