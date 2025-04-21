@@ -40,6 +40,7 @@ class StepState(
             players.forEach {
                 stepState[it] = firstStep
             }
+            currTurn = TurnState(players[playerIndex], firstStep)
         } else {
             throw IllegalStateException()
         }
@@ -124,8 +125,7 @@ class StepState(
         super.undo()
         val gmsId = currTurn.getLastThrow()?.tGameModeStep ?: currTurn.step?.gmsId
         gmsId?.let { stepId ->
-            stepState[getCurrPlayer()] =
-                gameConfigurationView.gameMode.steps.first { it.gmsId == stepId }
+            stepState[getCurrPlayer()] = steps.first { it.gmsId == stepId }
         }
 
         //Recheck requirementMet
@@ -172,7 +172,7 @@ class StepState(
     private fun getStepStateAsString(player: Player): String {
         val currStep = stepState[player]
         val stepIndex = currStep?.let {
-            gameConfigurationView.gameMode.steps.indexOf(it) + 1
+            steps.indexOf(it) + 1
         } ?: 0
         return "Step $stepIndex/${steps.size}"
     }

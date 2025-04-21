@@ -93,7 +93,7 @@ class GameModeViewModel(private val gameModeDao: GameModeDao) : ViewModel() {
     fun createGameModeStep() {
         gameModeSteps.add(
             GameModeStep(
-                gmsId = -abs(Random.nextInt(Int.MAX_VALUE)),
+                gmsId = -abs(Random.nextInt(1000, Int.MAX_VALUE)), //Avoid collision with default steps
                 gmsGameMode = 0,
                 gmsOrdinal = gameModeSteps.size
             )
@@ -122,8 +122,11 @@ class GameModeViewModel(private val gameModeDao: GameModeDao) : ViewModel() {
             } else gameModeDao.updateGameMode(gameMode.value)
 
             gameModeSteps.forEach {
-                it.gmsGameMode = gameModeId
-                if (it.gmsId <= 0) gameModeDao.createGameModeStep(it.copy(gmsId = 0))
+                val isNewStep = it.gmsGameMode == 0 && it.gmsId <= 0
+                if (isNewStep) {
+                    it.gmsGameMode = gameModeId
+                    gameModeDao.createGameModeStep(it.copy(gmsId = 0))
+                }
                 else gameModeDao.updateGameModeStep(it)
             }
 
@@ -139,7 +142,10 @@ class GameModeViewModel(private val gameModeDao: GameModeDao) : ViewModel() {
         gameModeConfig.value.gmcId = 0
         successCalculation.value.scId = 0
         failureCalculation.value.scId = 0
-        gameModeSteps.forEach{ it.gmsId = 0 }
+        gameModeSteps.forEach{
+            it.gmsId = 0
+            it.gmsGameMode = 0
+        }
         saveState()
     }
 

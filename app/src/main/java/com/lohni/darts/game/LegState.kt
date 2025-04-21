@@ -20,13 +20,13 @@ abstract class LegState(
     var playerIndex = playerToStart
 
     val turnList = mutableListOf<TurnState>()
-    protected var currTurn =
-        TurnState(players[playerIndex], gameConfigurationView.gameMode.steps.firstOrNull())
+    protected var currTurn: TurnState
 
     init {
         for (player in players) {
             scoreState[player] = gameConfigurationView.gameMode.gameMode.gmStartScore.toFloat()
         }
+        currTurn = TurnState(players[playerIndex], null)
     }
 
     open fun onThrow(field: Field, fieldType: FieldType): PlayerView {
