@@ -12,6 +12,14 @@
 The intention for this Project is to create a free, offline-only Android application designed for
 dart enthusiasts of all skill levels.
 
+## Features
+
+* Create you own game modes
+* Track statistics of you game
+* Visualize you game mode average
+* Customizable checkout suggestions
+* Light-/Darkmode
+
 ## Installation
 
 1. **Installation:**
@@ -19,11 +27,6 @@ dart enthusiasts of all skill levels.
       it into Android studio.
     * When reaching `v1.0.0`, it is planned to be made available on the Google Play Store.
 
-## Todo's
-
-* **Practice**: Add a practice mode to bundle one or more game modes into a repeatable routine.
-* **UI**: Rework/Enhance the user experience and layout. As there are a lot of different phone
-  spec's out there, it is hard to guarantee expected behaviour for them all.
 
 ## Disclaimer
 
