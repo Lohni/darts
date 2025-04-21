@@ -2,6 +2,7 @@ package com.lohni.darts.game_state.step
 
 import com.lohni.darts.data.assertUiState
 import com.lohni.darts.data.createGameConfiguration
+import com.lohni.darts.data.createGameConfigurationForTypeDarts
 import com.lohni.darts.data.createShortHalveIt
 import com.lohni.darts.game.StepState
 import com.lohni.darts.room.entities.Player
@@ -288,6 +289,43 @@ class StepStateTest {
 
         state.getGameView().assertUiState(1, 39.5f)
         state.onThrow(Field.ONE, FieldType.Triple)
+
+        Assert.assertEquals(1, winner)
+    }
+
+    @Test
+    fun testStepStateScoreTypeDartImmediatelyProceedRepeatOnFailureOnePlayer() {
+        var winner = -1
+        val state = StepState(
+            0,
+            createGameConfigurationForTypeDarts(),
+            0,
+            listOf(Player(1, "Test")),
+            onFinish = { ls, p -> winner = p.pId }
+        )
+
+        state.getGameView().assertUiState(1, 0f)
+        state.onThrow(Field.TEN, FieldType.Single)
+        state.getGameView().assertUiState(1, 0f, 0f)
+        state.onThrow(Field.ONE, FieldType.Single)
+        state.getGameView().assertUiState(1, 2f, 0f, 2f)
+        state.onThrow(Field.THREE, FieldType.Single)
+
+        state.getGameView().assertUiState(1, 3f)
+        state.onThrow(Field.TWO, FieldType.Single)
+        state.onThrow(Field.THREE, FieldType.Single)
+        state.onThrow(Field.FOUR, FieldType.Single)
+
+        state.getGameView().assertUiState(1, 6f)
+        state.onThrow(Field.TWO, FieldType.Single)
+        state.onThrow(Field.THREE, FieldType.Single)
+        state.onThrow(Field.FOUR, FieldType.Single)
+
+        state.getGameView().assertUiState(1, 9f)
+        state.onThrow(Field.TWO, FieldType.Single)
+        state.onThrow(Field.FIVE, FieldType.Single)
+
+        state.getGameView().assertUiState(1, 11f, 0f, 2f)
 
         Assert.assertEquals(1, winner)
     }

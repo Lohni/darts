@@ -79,6 +79,10 @@ class TurnState(val player: Player, val step: GameModeStep? = null) {
         return list
     }
 
+    fun countDartsForStep(stepId: Int): Int {
+        return getThrowsAsList().count { it.tGameModeStep == stepId }
+    }
+
     private fun undoThrow(): Throw {
         val toUndo: Throw?
         if (throwThree != null) {

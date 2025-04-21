@@ -16,6 +16,7 @@ import com.lohni.darts.room.enums.Field
 import com.lohni.darts.room.enums.FieldType
 import com.lohni.darts.room.enums.GameModeType
 import com.lohni.darts.room.enums.ScoreModifier
+import com.lohni.darts.room.enums.ScoreType
 import com.lohni.darts.room.enums.StepWinCondition
 import com.lohni.darts.ui.view.GameView
 import com.lohni.darts.ui.view.PlayerView
@@ -277,6 +278,34 @@ fun createGameConfiguration(): GameConfigurationView {
     )
 }
 
+fun createGameConfigurationForTypeDarts(): GameConfigurationView {
+    return GameConfigurationView(
+        GameModeView(
+            GameMode(gmScoreType = ScoreType.DART, gmType = GameModeType.STEP, gmStartScore = 0),
+            createAroundTheClockSteps()
+        ),
+        GameModeConfigView(
+            GameModeConfig(
+                gmcStepWinCondition = StepWinCondition.FIRST_TO_FINISH,
+                gmcImmediateProceedOnSuccess = true,
+                gmcRepeatOnFailure = true
+            ),
+            ScoreCalculation(
+                scByTypeModifier = ScoreModifier.ADD,
+                scByType = ScoreType.DART,
+                scByValueModifier = ScoreModifier.NONE,
+                scByValue = 0
+            ),
+            ScoreCalculation(
+                scByTypeModifier = ScoreModifier.ADD,
+                scByType = ScoreType.DART,
+                scByValueModifier = ScoreModifier.NONE,
+                scByValue = 0
+            )
+        )
+    )
+}
+
 fun createShortHalveIt(
     winCondition: StepWinCondition,
     repeatOnFail: Boolean = false,
@@ -319,5 +348,15 @@ private fun createShortHalveItSteps(): List<GameModeStep> {
         GameModeStep(4, gmsField = Field.NINETEEN, gmsFieldType = FieldType.ALL),
         GameModeStep(5, gmsField = Field.TWENTY, gmsFieldType = FieldType.ALL),
         GameModeStep(6, gmsField = Field.ALL, gmsFieldType = FieldType.Triple),
+    )
+}
+
+private fun createAroundTheClockSteps(): List<GameModeStep> {
+    return listOf(
+        GameModeStep(1, gmsField = Field.ONE, gmsFieldType = FieldType.Single),
+        GameModeStep(2, gmsField = Field.TWO, gmsFieldType = FieldType.Single),
+        GameModeStep(3, gmsField = Field.THREE, gmsFieldType = FieldType.Single),
+        GameModeStep(4, gmsField = Field.FOUR, gmsFieldType = FieldType.Single),
+        GameModeStep(5, gmsField = Field.FIVE, gmsFieldType = FieldType.Single),
     )
 }

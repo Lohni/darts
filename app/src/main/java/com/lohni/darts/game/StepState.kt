@@ -62,10 +62,15 @@ class StepState(
         if (getCurrentStep().requirementMet(field, fieldType)) {
             val scoredPoints = field.fId * fieldType.ftId
             requirementMet = true
-            return gmcView.successCalculation?.calculateScore(currScore, scoredPoints.toFloat(), 0f)
-                ?: 0f
+            return gmcView.successCalculation?.calculateScore(
+                currScore, scoredPoints.toFloat(),
+                (currTurn.countDartsForStep(getCurrentStep().gmsId) + 1).toFloat()
+            ) ?: 0f
         } else if (currTurn.countDarts() == 2 && !requirementMet) {
-            return gmcView.failureCalculation?.calculateScore(currScore, 0f, 0f) ?: 0f
+            return gmcView.failureCalculation?.calculateScore(
+                currScore, 0f,
+                (currTurn.countDartsForStep(getCurrentStep().gmsId) + 1).toFloat()
+            ) ?: 0f
         }
 
         return 0f
