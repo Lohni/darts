@@ -45,6 +45,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.toRoute
@@ -299,8 +300,13 @@ fun ClassicMode(gameModeViewModel: GameModeViewModel) {
                 singleLine = true,
                 label = { Text(stringResource(R.string.start_score)) },
                 onValueChange = {
-                    val value = if (it != "") it else "0"
-                    gameModeViewModel.setGameMode(gameMode.copy(gmStartScore = value.toInt()))
+                    var changedValue = if (it != "") it else "0"
+                    if (changedValue != "0" && gameMode.gmStartScore == 0) {
+                        changedValue = it.replaceFirst("0", "")
+                    }
+                    if (changedValue.isDigitsOnly() && changedValue.toLong() < Int.MAX_VALUE) {
+                        gameModeViewModel.setGameMode(gameMode.copy(gmStartScore = changedValue.toInt()))
+                    }
                 },
                 modifier = Modifier.weight(0.7F),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),

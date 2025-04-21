@@ -54,6 +54,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.lohni.darts.R
@@ -603,7 +604,9 @@ fun ScoreCalculation(
                 if (changedValue != "0" && calcSchema.scByValue == 0) {
                     changedValue = it.replaceFirst("0", "")
                 }
-                onCalcChange.invoke(calcSchema.copy(scByValue = changedValue.toInt()))
+                if (changedValue.isDigitsOnly() && changedValue.toLong() < Int.MAX_VALUE) {
+                    onCalcChange.invoke(calcSchema.copy(scByValue = changedValue.toInt()))
+                }
             },
             modifier = Modifier
                 .weight(0.3F)
