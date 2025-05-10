@@ -55,8 +55,3 @@ jobs:
             --draft=false \
             --latest \
             --verify-tag
-
-      - name: Upload Release Asset
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ steps.properties.outputs.release_tag }} app/build/outputs/bundle/release/*
