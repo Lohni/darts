@@ -2,6 +2,22 @@
 
 ## [Unreleased]
 
+## [0.3.0] - 2025-05-10
+
+### Added
+
+- fix checkin condition check
+- fix score type dart behaviour
+- fix step state on random step order
+- fix edgecases in number input parsing
+- add 301 and Halve It as default game modes
+- fix checkout edit validation for all out
+- fix checkout suggestion on bust
+- add option to set a player as default
+- improve number input behaviour
+- remove a few multiline text issues
+- adjust statistics and score ordering for different win conditions
+
 ## [0.2.0] - 2025-04-13
 
 ### Added
@@ -18,6 +34,7 @@
 - fix github workflow
 - Initial commit - v0.1.0
 
-[Unreleased]: https://github.com/Lohni/darts/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/Lohni/darts/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/Lohni/darts/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/Lohni/darts/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/Lohni/darts/commits/v0.1.0
